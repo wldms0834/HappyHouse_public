@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.dao.NoticeDao">
+
+<!--  
+	<resultMap type="qna" id="qna">
+		<id column="qnaNo" property="qnaNo"></id>
+		<result column="qnaTitle" property="qnaTitle" />
+		<result column="qnaUserid" property="qnaUserid" />
+		<result column="qnaDatetime" property="qnaDatetime" />
+		<result column="replyContent" property="replyContent" />
+		<result column="replyDatetime" property="replyDatetime" />
+		<result column="replyUserid" property="replyUserid" />
+	</resultMap>
+-->
+
+	<!-- 게시글 전체 조회 -->
+	<select id="selectNotice" resultType="notice">
+		select notice_no as noticeNo,
+		notice_title as noticeTitle,
+		notice_content as noticeContent,
+		notice_userid as noticeUserid,
+		notice_datetime as noticeDatetime
+		from notice
+		order by notice_no desc
+	</select>
+
+	<select id="selectNoticeByNo" resultType="notice">
+		select notice_no as noticeNo,
+		notice_title as noticeTitle,
+		notice_content as noticeContent,
+		notice_userid as noticeUserid,
+		notice_datetime as noticeDatetime
+		from notice
+		where notice_no = #{no}
+	</select>
+
+	<insert id="insertNotice" parameterType="notice">
+		insert into notice(notice_title, notice_content, notice_userid)
+		values(#{noticeTitle}, #{noticeContent}, #{noticeUserid})
+	</insert>
+
+	<update id="updateNotice" parameterType="notice">
+		update notice
+		set notice_title = #{noticeTitle},
+		notice_content = #{noticeContent},
+		notice_userid = #{noticeUserid}
+		where notice_no = #{noticeNo}
+	</update>
+
+	<delete id="deleteNotice" parameterType="int">
+		delete
+		from notice
+		where notice_no = #{no}
+	</delete>
+
+</mapper>
+

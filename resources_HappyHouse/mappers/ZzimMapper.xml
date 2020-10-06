@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.dao.ZzimDao">
+
+<!-- <select id="selectZzim" resultType="zzim" parameterType="String">
+		select zzim_no as zzimNo,
+		id as id,
+		no as no,
+		zzim_datetime as zzimDatetime
+		from zzim z, housedeal 
+		where id = #{id}
+		order by zzim_no desc
+	</select>  -->
+	
+	<select id="selectZzimJoin" resultType="zzim" parameterType="String">
+		select zzim_no as zzimNo,
+		z.id as id,
+		z.no as no,
+		d.dong as dong,
+		d.aptname as aptName,
+		d.img as img,
+		z.zzim_datetime as zzimDatetime
+		from zzim z, housedeal d
+        where z.no = d.no
+		and id = #{id}
+		order by zzim_datetime desc
+	</select>
+	
+
+	<select id="selectZzimByNo" resultType="zzim">
+		select zzim_no as zzimNo,
+		id as id,
+		no as no,
+		zzim_datetime as zzimDatetime
+		from zzim
+		where zzim_no = #{zzimNo}
+	</select>
+
+	<insert id="insertZzim" parameterType="zzim">
+		insert into zzim(id, no, zzim_datetime)
+		values(#{id}, #{no}, now())
+	</insert>
+
+	<delete id="deleteZzim" parameterType="int">
+		delete
+		from zzim
+		where zzim_no = #{zzimNo}
+	</delete>
+	
+	<delete id="deleteZzimdetail" parameterType="string">
+		delete
+		from zzim
+		where no = #{no}
+		and id =#{id}
+	</delete>
+</mapper>
+
